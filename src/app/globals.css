@@ -1,26 +1,160 @@
 @import "tailwindcss";
 
+/* ── Apple Design System ── */
+@theme {
+  /* Colors */
+  --color-apple-bg: #F5F5F7;
+  --color-apple-surface: #FFFFFF;
+  --color-apple-text: #1D1D1F;
+  --color-apple-muted: #86868B;
+  --color-apple-border: rgba(0, 0, 0, 0.08);
+  --color-apple-accent: #0071E3;
+  --color-apple-accent-hover: #0077ED;
+  --color-apple-glass: rgba(255, 255, 255, 0.72);
+  --color-apple-glass-border: rgba(255, 255, 255, 0.3);
+  --color-apple-danger: #FF3B30;
+  --color-apple-success: #34C759;
+
+  /* Font */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Animation durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+/* ── Base ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #F5F5F7;
+  --foreground: #1D1D1F;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbars everywhere but keep scroll ability */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* ── Smooth Scrolling ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── iOS Wiggle Animation ── */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-0.4deg); }
+  75%      { transform: rotate(0.4deg); }
+}
+
+@keyframes wiggle-intense {
+  0%, 100% { transform: rotate(0deg) scale(1.02); }
+  25%      { transform: rotate(-1.2deg) scale(1.02); }
+  75%      { transform: rotate(1.2deg) scale(1.02); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.3s ease-in-out infinite;
+}
+
+.animate-wiggle-intense {
+  animation: wiggle-intense 0.15s ease-in-out infinite;
+}
+
+/* ── Grid Background Pattern (Admin Mode) ── */
+.admin-grid-bg {
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ── react-grid-layout styles ── */
+.react-grid-layout {
+  position: relative;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+
+.react-grid-item.resizing {
+  opacity: 0.9;
+  z-index: 3;
+}
+
+.react-grid-item.react-draggable-dragging {
+  opacity: 0.8;
+  z-index: 3;
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+/* Hide resize handle when not in admin mode */
+.react-grid-item.no-admin > .react-resizable-handle {
+  display: none;
+}
+
+/* ── Toast Animation ── */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-in forwards;
 }
